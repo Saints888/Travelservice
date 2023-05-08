@@ -1,0 +1,100 @@
+//    @GetMapping
+//    public ModelAndView getAllCitiesView2() {
+//
+//        List<CityInfo> cityInfos = cityService.getAll();
+//
+//        List<CityWeather> cityWeathers = new ArrayList<>();
+//        for(CityInfo info: cityInfos) {
+//            CityWeather weather = new CityWeather();
+//            weather.setCityInfo(info);
+//            weather.setWeather(cityService.getWeather(info.getId()));
+//            cityWeathers.add(weather);
+//        }
+//
+//        ModelAndView view = new ModelAndView();
+//        view.setViewName("/allCities.jsp");
+//        view.addObject("allCities", cityInfos);
+//        view.addObject("weathers", cityWeathers);
+//
+//        return view;
+//    }
+
+**********************************************************************************************************
+
+ /**
+     * Получить список всех городов рядом
+     * с текушим городом в указанном радиусе.
+     *
+     * @param cityId id текущего города
+     * @return список городов
+     */
+    public List<CityInfo> getCityNear(String cityId) {
+
+        log.info(">> Method .getCityNear started");
+        CityInfo city = repository.getCity(cityId);
+        if(city == null) {
+            log.info(">> City id={} not found", cityId);
+            throw new CustomException("City with id=" + cityId + " not found!", Errors.CITY_NOT_FOUND);
+        }
+
+        List<CityInfo> cityNear = getAll().stream()
+                .filter((CityInfo info) -> {
+                    if(!city.getName().equalsIgnoreCase(info.getName()) &&
+                        Integer.parseInt(getDistance(cityId, info.getId())) < radius) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                })
+                .collect(Collectors.toList());
+
+        log.info(">> Method .getCityNear completed, cityNear size={}", cityNear.size());
+        return cityNear;
+    }
+
+**********************************************************************************************************
+
+    /**
+     * Создать новый город.
+     *
+     * @author - Насибуллина Гульназ
+     */
+	@PostMapping("/city/create")
+
+    public ModelAndView createCity(@RequestParam("name") String name,
+                                   @RequestParam("description") String description,
+                                   @RequestParam("climate") String climate,
+                                   @RequestParam("latitude") String latitudeStr,
+                                   @RequestParam("longitude") String longitudeStr,
+                                   @RequestParam("population") String populationStr) {
+
+        ModelAndView view = new ModelAndView();
+
+        try {
+            double latitude = parseCoordinates(latitudeStr);
+            double longitude = parseCoordinates(longitudeStr);
+            int population = parsePopulation(populationStr);
+
+            CityInfo cityInfo = new CityInfo();
+            cityInfo.setName(name);
+            cityInfo.setDescription(description);
+            cityInfo.setClimate(climate);
+            cityInfo.setLatitude(latitude);
+            cityInfo.setLongitude(longitude);
+            cityInfo.createId();
+            cityInfo.setPopulation(population);
+            cityService.create(cityInfo);
+
+            return getAllCitiesView();
+
+        } catch (CustomException ex) {
+            String message = "При внесении города " + name + " в базу данных произошла ошибка:<br>" + ex.getMessage();
+            view.addObject("errorMessage", message);
+            view.setViewName("/create.jsp");
+            return view;
+        }
+
+    }
+
+************************************************************************************************************************
+

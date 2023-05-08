@@ -1,0 +1,66 @@
+package ru.edu.service;
+
+import javax.swing.JOptionPane;
+
+public class CityWeatherInfo {
+
+//    private static final String GRADUS = "°C";
+//    private String name;
+//    private double windSpeed, press;
+//    private int temperature;
+//    private boolean control = true;
+//
+//    public CityWeatherInfo() {
+//    }
+//
+//    public void weatherMessage() {
+//
+//        String stringTemp = temperature > 0 ? ("+" + temperature + GRADUS) : (temperature + GRADUS);
+//        String title = "Погода в городе " + name;
+//        String fullMessage = "<html>Краткая информация о погоде.<br>" +
+//                "<hr>"+
+//                "<br>Температура воздуха: " + stringTemp +
+//                "<br>Скорость ветра: " + windSpeed +
+//                "<br>Атмосферное давление: " + press + " мм.рт.ст.</html>";
+//        String emptyMessage = "<html>Информация о погоде отсутствует.<br>" +
+//                "<hr>"+
+//                "<br>Отсутствует подключение к интернету," +
+//                "<br>либо URL адрес или название города" +
+//                "<br>некорректны.";
+//
+//        if(control) {
+//            JOptionPane.showMessageDialog(null, fullMessage, title, JOptionPane.PLAIN_MESSAGE);
+//        } else {
+//            JOptionPane.showMessageDialog(null, emptyMessage, title, JOptionPane.PLAIN_MESSAGE);
+//        }
+//    }
+//
+//    public void setControl(boolean control) {
+//        this.control = control;
+//    }
+//
+//    public void setName(String name) {
+//        this.name = name;
+//    }
+//
+//    public void setTemperature(int temperature) {
+//        this.temperature = temperature;
+//    }
+//
+//    public void setWindSpeed(double windSpeed) {
+//        this.windSpeed = windSpeed;
+//    }
+//
+//    public void setPress(double press) {
+//        this.press = press;
+//    }
+//
+//    @Override
+//    public String toString() {
+//        return "CityWeatherInfo{" +
+//                " name='" + name + '\'' +
+//                ", temperature='" + temperature + '\'' +
+//                ", windSpeed=" + windSpeed +
+//                ", press=" + press + " }";
+//    }
+}
