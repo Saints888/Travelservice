@@ -32,7 +32,7 @@
 
         <!-- Copyright -->
         <div class="text-center p-1">
-            © 2022 Copyright:
+            © 2023 Copyright:
             <a class="text-white" href="/travel">TravelApp</a>
         </div>
         <!-- Copyright -->
